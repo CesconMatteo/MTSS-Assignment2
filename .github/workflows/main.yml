@@ -14,4 +14,4 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - run: mvn install -f pom.xml
-      - run: mvn coveralls:report --define repoToken=${{ secrets.COVERALL_REPO_TOKEN }})
+      - run: mvn coveralls:report --define repoToken=${{ secrets.COVERALL_REPO_TOKEN }}

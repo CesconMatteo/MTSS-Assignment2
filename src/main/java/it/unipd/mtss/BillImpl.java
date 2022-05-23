@@ -12,7 +12,7 @@ public class BillImpl implements Bill {
     public double getOrderPrice(List<EItem> itemsOrdered, User user)
             throws IllegalArgumentException {
         Double sum = 0.0;
-        int procCount = 0, mouseCount = 0;
+        int procCount = 0, mouseCount = 0, keyboardCount = 0;
         if (itemsOrdered.size() < 1) {
             throw new IllegalArgumentException("Not less than 1 item!");
         }
@@ -27,12 +27,13 @@ public class BillImpl implements Bill {
         }
         sum = checkProcessor(sum, procCount, itemsOrdered);
         sum = checkMouse(sum, mouseCount, itemsOrdered);
+        sum = checkMousesEqualsToKeyboards(sum, mouseCount, keyboardCount, itemsOrdered);
 
         return sum;
     }
 
-    protected static double checkProcessor (double sum, int procCount,
-            List<EItem> itemsOrdered) throws IllegalArgumentException {
+    protected static double checkProcessor (double sum, int procCount, List<EItem> itemsOrdered)
+            throws IllegalArgumentException {
         if (sum <= 0) {
             throw new IllegalArgumentException();
         }
@@ -48,8 +49,8 @@ public class BillImpl implements Bill {
         return sum;
     }
 
-    protected static double checkMouse (double sum, int mouseCount,
-    List<EItem> itemsOrdered) throws IllegalArgumentException {
+    protected static double checkMouse (double sum, int mouseCount, List<EItem> itemsOrdered)
+            throws IllegalArgumentException {
         if (sum <= 0) {
             throw new IllegalArgumentException();
         }
@@ -63,5 +64,22 @@ public class BillImpl implements Bill {
             return sum - lowest;
         }
         return sum;
-    } 
+    }
+
+    protected static double checkMousesEqualsToKeyboards (double sum, int mouseCount,
+            int keyboardCount, List<EItem> itemsOrdered) throws IllegalArgumentException {
+        if (sum <= 0) {
+            throw new IllegalArgumentException();
+        }
+        if (mouseCount == keyboardCount && mouseCount > 0) {
+            double lowest = Double.POSITIVE_INFINITY;
+            for (EItem it2 : itemsOrdered) {
+                if (it2.getPrice()<lowest) {
+                    lowest = it2.getPrice();
+                }
+            }
+            return sum - lowest;
+        }
+        return sum;
+    }
 }

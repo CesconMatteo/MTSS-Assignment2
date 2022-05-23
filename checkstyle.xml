@@ -6,7 +6,9 @@
     <property name="headerFile" value="${checkstyle.header.file}"/>
   </module>
   <module name="FileLength"/>
-  <module name="LineLength"/>
+  <module name="LineLength">
+    <property name="max" value="100"/>
+  </module>
   <module name="FileTabCharacter"/>
   <module name = "TreeWalker">
     <module name="BooleanExpressionComplexity"/>

@@ -26,7 +26,7 @@ public class BillImpl implements Bill {
             }
         }
         sum = checkProcessor(sum, procCount, itemsOrdered);
-        sum = checkMouse(sum, procCount, itemsOrdered);
+        sum = checkMouse(sum, mouseCount, itemsOrdered);
 
         return sum;
     }

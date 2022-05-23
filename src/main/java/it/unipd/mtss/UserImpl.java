@@ -18,9 +18,9 @@ public class UserImpl implements User {
     private String email;
     private String address;
 
-    protected boolean areArgumentsValid(long _id, 
-    String s, String n, String e,String a,
-    LocalDate date) throws DateTimeException, IllegalArgumentException {
+    protected void areArgumentsValid(long _id, 
+            String s, String n, String e,String a,
+            LocalDate date) throws DateTimeException, IllegalArgumentException {
         if(LocalDate.now().isAfter(date)
         && date.isAfter(
         LocalDate.of(1899, 12, 31))){
@@ -28,7 +28,7 @@ public class UserImpl implements User {
                 if(!n.isEmpty() && !n.isBlank()){
                     if(!e.isEmpty() && !e.isBlank()){
                         if(!a.isEmpty() && !a.isBlank()){
-                            return true;
+                            return;
                         }
                     }
                 }
@@ -40,14 +40,13 @@ public class UserImpl implements User {
 
     public UserImpl(long _id, String s, String n, String e,String a,
         LocalDate date) throws DateTimeException, IllegalArgumentException {
-        if (areArgumentsValid(_id, s, n, e, a, date)) {
-            id = _id;
-            surname = s;
-            name = n;
-            email = e;
-            address = a;
-            birthDate = date;
-        }
+        areArgumentsValid(_id, s, n, e, a, date);
+        id = _id;
+        surname = s;
+        name = n;
+        email = e;
+        address = a;
+        birthDate = date;
     }
 
     @Override

@@ -95,8 +95,23 @@ public class UserTest {
     }
 
     @Test
+    public void ConstructWith_ValidParameters () {
+        try {
+            new UserImpl(1, "a", "n", "e", "a", LocalDate.of(1943, 3, 5));
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
     public void getDateTest () {
         User u = new UserImpl(2, "f", "n", "e", "a", LocalDate.of(1901, 12, 30));
         assertEquals(LocalDate.of(1901, 12, 30), u.getDate());
+    }
+
+    @Test
+    public void getIdTest () {
+        User u = new UserImpl(2, "f", "n", "e", "a", LocalDate.of(1901, 12, 30));
+        assertEquals(2, u.getId());
     }
 }

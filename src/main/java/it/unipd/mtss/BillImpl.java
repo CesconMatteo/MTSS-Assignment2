@@ -29,6 +29,12 @@ public class BillImpl implements Bill {
         sum = checkMouse(sum, mouseCount, itemsOrdered);
         sum = checkMousesEqualsToKeyboards(sum, mouseCount, keyboardCount, itemsOrdered);
 
+        /* sconto del 10% se l'ordine ha un prezzo superiore ai 1000 euro */
+        if(sum > 1000){
+         sum *= 0.9;
+        }
+
+
         return sum;
     }
 

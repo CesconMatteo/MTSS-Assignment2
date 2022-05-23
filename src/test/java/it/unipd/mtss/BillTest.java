@@ -174,5 +174,24 @@ public class BillTest {
         double sum = BillImpl.checkMousesEqualsToKeyboards(110, 2, 2, itemList);
         assertEquals(100, sum, 0.0);
     }
+
+    @Test
+    public void OrderPriceGreaterThanOneThousand () {
+        EItem e  = new EItemImpl("1", 550, ItemType.Processor);
+        List<EItem> itemList = new ArrayList<EItem>();
+        itemList.addAll(Collections.nCopies(2, e));
+        double sum = o.getOrderPrice(itemList, new UserImpl
+        (1, "s", "n", "f", " f", LocalDate.of(2000, 3, 3)));
+        assertEquals(990, sum, 0.0);
+    }
+
+    @Test
+    public void OrderPriceMinorThanOneThousend () {
+        EItem e = new EItemImpl("n", 100, ItemType.Motherboard);
+        List<EItem> itemList = new ArrayList<EItem>(Collections.nCopies(10, e));
+        double sum = o.getOrderPrice(itemList, new UserImpl(1, "s", "n", "e", "a", 
+        LocalDate.of(2000, 3, 3)));
+        assertEquals(1000.0, sum, 0.0);
+    }
 }
 

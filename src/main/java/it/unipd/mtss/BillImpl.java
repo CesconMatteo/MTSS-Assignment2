@@ -73,7 +73,9 @@ public class BillImpl implements Bill {
                     lowest = it2.getPrice();
                 }
             }
-            return sum - (lowest/2);
+            if (lowest != Double.POSITIVE_INFINITY) {
+                return sum - (lowest/2);
+            }
         }
         return sum;
     }
@@ -90,7 +92,9 @@ public class BillImpl implements Bill {
                     lowest = it2.getPrice();
                 }
             }
-            return sum - lowest;
+            if (lowest != Double.POSITIVE_INFINITY) {
+                return sum - lowest;
+            }
         }
         return sum;
     }

@@ -320,5 +320,21 @@ public class BillTest {
         double sum = o.getOrderPrice(itemList, minor);
         assertEquals(0.0, sum, 0.0);
     }
+
+    @Test
+    public void CheckProcessor_WrongType () {
+        EItem e  = new EItemImpl("1", 10, ItemType.Keyboard);
+        List<EItem> itemList = new ArrayList<EItem>(Collections.nCopies(5, e));
+        double sum = o.checkProcessor(30.0,7,itemList);
+        assertEquals(30.0, sum, 0.0);
+    }
+
+    @Test
+    public void CheckMouses_WrongType () {
+        EItem e  = new EItemImpl("1", 10, ItemType.Keyboard);
+        List<EItem> itemList = new ArrayList<EItem>(Collections.nCopies(5, e));
+        double sum = o.checkMouse(50.0,12,itemList);
+        assertEquals(50.0, sum, 0.0);
+    }
 }
 

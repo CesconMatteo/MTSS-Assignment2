@@ -12,7 +12,7 @@ public class BillImpl implements Bill {
     public double getOrderPrice(List<EItem> itemsOrdered, User user)
             throws IllegalArgumentException {
         Double sum = 0.0;
-        int procCount = 0;
+        int procCount = 0, mouseCount = 0;
         if (itemsOrdered.size() < 1) {
             throw new IllegalArgumentException("Not less than 1 item!");
         }
@@ -21,8 +21,13 @@ public class BillImpl implements Bill {
             if (it.getType() == ItemType.Processor) {
                 procCount++;
             }
+            if (it.getType() == ItemType.Mouse) {
+                mouseCount++;
+            }
         }
         sum = checkProcessor(sum, procCount, itemsOrdered);
+        sum = checkMouse(sum, procCount, itemsOrdered);
+
         return sum;
     }
 
@@ -42,4 +47,21 @@ public class BillImpl implements Bill {
         }
         return sum;
     }
+
+    protected static double checkMouse (double sum, int mouseCount,
+    List<EItem> itemsOrdered) throws IllegalArgumentException {
+        if (sum <= 0) {
+            throw new IllegalArgumentException();
+        }
+        if (mouseCount > 10) {
+            double lowest = Double.POSITIVE_INFINITY;
+            for (EItem it2 : itemsOrdered) {
+                if (it2.getPrice()<lowest && it2.getType()==ItemType.Mouse){
+                    lowest = it2.getPrice();
+                }
+            }
+            return sum - lowest;
+        }
+        return sum;
+    } 
 }

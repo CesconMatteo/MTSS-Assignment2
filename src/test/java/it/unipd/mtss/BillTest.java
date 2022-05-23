@@ -200,5 +200,22 @@ public class BillTest {
         List<EItem> itemList = new ArrayList<EItem>(Collections.nCopies(31, e));
         o.getOrderPrice(itemList, new UserImpl(1, "s", "n", "e", "a", LocalDate.of(1993, 3, 8)));
     }
+
+    @Test
+    public void GetOrderPrice_PriceMinorThanTen () {
+        EItem e = new EItemImpl("1", 4, ItemType.Keyboard);
+        List<EItem> itemList = new ArrayList<EItem>(Collections.nCopies(2, e));
+        double sum = o.getOrderPrice(itemList, new UserImpl(1, "s", "n", "e", "a", LocalDate.of(1993, 3, 8)));
+        assertEquals(10, sum, 0.0);
+    }
+
+    @Test
+    public void GetOrderPrice_PriceGreaterThanTen () {
+        EItem e = new EItemImpl("1", 4, ItemType.Keyboard);
+        List<EItem> itemList = new ArrayList<EItem>(Collections.nCopies(3, e));
+        double sum = o.getOrderPrice(itemList, new UserImpl(1, "s", "n", "e", "a", LocalDate.of(1993, 3, 8)));
+        assertEquals(12, sum, 0.0);
+    }
+
 }
 

@@ -77,7 +77,7 @@ public class BillTest {
         fail();
     }
     
-        @Test
+    @Test
     public void CheckMouse_ZeroMouses () {
         double sum = BillImpl.checkMouse(30.0,0, new ArrayList<EItem>());
         assertEquals(30, sum, 0.0);
@@ -116,6 +116,63 @@ public class BillTest {
     public void CheckMouse_SumEqualToZero () {
         BillImpl.checkMouse(0.0, 10, new ArrayList<EItem>());
         fail();
+    }
+
+    @Test
+    public void CheckMousesEqualsToKeyboards_ZeroMouses () {
+        EItem e  = new EItemImpl("1", 10, ItemType.Keyboard);
+        List<EItem> itemList = new ArrayList<EItem>();
+        itemList.addAll(Collections.nCopies(3, e));
+        double sum = BillImpl.checkMousesEqualsToKeyboards(30.0, 0, 3, itemList);
+        assertEquals(30.0, sum, 0.0);
+    }
+
+    @Test
+    public void CheckMousesEqualsToKeyboards_ZeroKeyboard () {
+        EItem e  = new EItemImpl("1", 10, ItemType.Mouse);
+        List<EItem> itemList = new ArrayList<EItem>();
+        itemList.addAll(Collections.nCopies(3, e));
+        double sum = BillImpl.checkMousesEqualsToKeyboards(30.0, 3, 0, itemList);
+        assertEquals(30.0, sum, 0.0);
+    }
+
+    @Test
+    public void CheckMouseKeyboard_ZeroMouseZeroKeyboard () {
+        List<EItem> itemList = new ArrayList<EItem>();
+        itemList.add(new EItemImpl("1", 20, ItemType.Motherboard));
+        itemList.add(new EItemImpl("2", 10, ItemType.Motherboard));
+        itemList.add(new EItemImpl("3", 30, ItemType.Processor));
+        double sum = BillImpl.checkMousesEqualsToKeyboards(60, 0, 0, itemList);
+        assertEquals(60, sum, 0.0);
+    }
+
+    @Test
+    public void CheckMouseKeyboard_LessThanZeroMousesAndKeyboard () {
+        double sum = BillImpl.checkMousesEqualsToKeyboards(30.0, -3, -3, new ArrayList<EItem>());
+        assertEquals(30.0, sum, 0.0);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void CheckMouseEqualsToKeyboard_NegativeSum () {
+        BillImpl.checkMousesEqualsToKeyboards(-45.0, 10, 10, new ArrayList<EItem>());
+        fail();
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void CheckMouseKeyboard_SumEqualToZero () {
+        BillImpl.checkMousesEqualsToKeyboards(0.0, 10, 10, new ArrayList<EItem>());
+        fail();
+    }
+
+    @Test
+    public void CheckMouseKeyboard_ExpectedResults () {
+        List<EItem> itemList = new ArrayList<EItem>();
+        itemList.add(new EItemImpl("1", 20, ItemType.Mouse));
+        itemList.add(new EItemImpl("2", 10, ItemType.Mouse));
+        itemList.add(new EItemImpl("3", 30, ItemType.Keyboard));
+        itemList.add(new EItemImpl("4", 50, ItemType.Keyboard));
+        double sum = BillImpl.checkMousesEqualsToKeyboards(110, 2, 2, itemList);
+        assertEquals(100, sum, 0.0);
     }
 }
 

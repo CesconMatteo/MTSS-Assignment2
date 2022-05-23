@@ -36,6 +36,10 @@ public class BillImpl implements Bill {
          sum *= 0.9;
         }
 
+        if(sum < 10){
+            sum += 2;
+        }
+
 
         return sum;
     }

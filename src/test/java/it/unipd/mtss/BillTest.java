@@ -176,7 +176,7 @@ public class BillTest {
     }
 
     @Test
-    public void OrderPriceGreaterThanOneThousand () {
+    public void GetOrderPrice_GreaterThanOneThousand () {
         EItem e  = new EItemImpl("1", 550, ItemType.Processor);
         List<EItem> itemList = new ArrayList<EItem>();
         itemList.addAll(Collections.nCopies(2, e));
@@ -186,12 +186,19 @@ public class BillTest {
     }
 
     @Test
-    public void OrderPriceMinorThanOneThousend () {
+    public void GetOrderPrice_LessThanOneThousand () {
         EItem e = new EItemImpl("n", 100, ItemType.Motherboard);
         List<EItem> itemList = new ArrayList<EItem>(Collections.nCopies(10, e));
         double sum = o.getOrderPrice(itemList, new UserImpl(1, "s", "n", "e", "a", 
         LocalDate.of(2000, 3, 3)));
         assertEquals(1000.0, sum, 0.0);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void GetOrderPrice_MoreThanThirtyItems () {
+        EItem e = new EItemImpl("1", 4, ItemType.Keyboard);
+        List<EItem> itemList = new ArrayList<EItem>(Collections.nCopies(31, e));
+        o.getOrderPrice(itemList, new UserImpl(1, "s", "n", "e", "a", LocalDate.of(1993, 3, 8)));
     }
 }
 

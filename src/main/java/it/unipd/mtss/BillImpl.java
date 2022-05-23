@@ -16,6 +16,9 @@ public class BillImpl implements Bill {
         if (itemsOrdered.size() < 1) {
             throw new IllegalArgumentException("Not less than 1 item!");
         }
+        if (itemsOrdered.size() > 30) {
+            throw new IllegalArgumentException("Not more than 30 items!");
+        }
         for (EItem it : itemsOrdered) {
             sum += it.getPrice();
             if (it.getType() == ItemType.Processor) {
@@ -29,7 +32,6 @@ public class BillImpl implements Bill {
         sum = checkMouse(sum, mouseCount, itemsOrdered);
         sum = checkMousesEqualsToKeyboards(sum, mouseCount, keyboardCount, itemsOrdered);
 
-        /* sconto del 10% se l'ordine ha un prezzo superiore ai 1000 euro */
         if(sum > 1000){
          sum *= 0.9;
         }
